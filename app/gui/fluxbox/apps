@@ -1,0 +1,3 @@
+[app] (name=surf) (class=Surf) (role=Surf)
+  [Fullscreen] {yes}
+[end]

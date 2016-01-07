@@ -1,0 +1,88 @@
+## Train Pi Display
+
+#base-image for node on any machine using a template var
+FROM resin/%%RESIN_MACHINE_NAME%%-golang:latest
+
+# Update to latest repo
+RUN apt-get update
+
+### Install wiringPi
+#RUN apt-get install -y sudo python python-dev python-pip git libi2c-dev python-serial i2c-tools python-smbus 
+#RUN git clone https://github.com/WiringPi/WiringPi.git && cd WiringPi && ./build && echo "wiringPi Installed"
+#RUN pip install RPi.GPIO
+
+## Xorg packages
+RUN apt-get install -y xorg xserver-xorg-video-fbdev fluxbox surf unclutter
+
+RUN mkdir ~/.fluxbox
+
+# Install node express and jade - install deps on build server, making sure to clean up the artifacts it creates in order to reduce the image size.
+RUN apt-get install -y nodejs npm
+#RUN npm install express jade
+
+## Install Redis
+RUN apt-get install -y redis-server
+
+### Install php and composer for php
+
+RUN apt-get -y install php5-cli curl cron
+
+RUN curl -sS https://getcomposer.org/installer | php
+RUN mv composer.phar /usr/local/bin/composer
+
+RUN rm -rf /tmp/*
+
+### Install golang packages
+
+#RUN apt-get -y install golang mercurial git
+
+#### Install vi during testing
+RUN apt-get install -y vim
+
+
+######################################
+##### Uncachable lines from here #####
+######################################
+
+## Copy App files to container
+COPY app /usr/src/app 
+
+#### Set up xorg config
+RUN cp /usr/src/app/gui/xorg/* /usr/share/X11/xorg.conf.d/
+
+### Set up fluxbox config
+RUN cp /usr/src/app/gui/fluxbox/* ~/.fluxbox/
+
+## Install node app
+
+WORKDIR /usr/src/app/node
+RUN npm install
+
+#### Install server (php) app
+
+WORKDIR /usr/src/app/server_php
+RUN composer install
+
+RUN touch /var/log/cron.log
+
+#### Install go app
+
+ENV MARTINI_ENV production
+#ENV MARTINI_ENV testing
+
+RUN mkdir -p /go/src/github.com/tomberthon
+COPY app/api_go /go/src/github.com/tomberthon/train-alerts
+
+#WORKDIR /opt/gocode/src/github.com/tomberthon/train-alerts
+# Go build disabled as need go 1.5.2 to build on emulators - run in init.sh instead
+#RUN go get
+
+### Make app scripts executable
+RUN chmod a+x /usr/src/app/*
+
+## Tidy up node install cache and remove tmp files to keep image size small
+RUN npm cache clean && rm -rf /tmp/*
+RUN apt-get clean
+
+## Cmd to start services
+CMD /usr/src/app/init.sh

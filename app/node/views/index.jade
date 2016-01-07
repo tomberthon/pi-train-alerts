@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  script var station = "#{process.env.APP_STATION}"
+  script var destination = "#{process.env.APP_DESTINATION}"
+  script var apiHost = "http://localhost:3000"
+
+  // TIME
+  #time It's Now
+
+  // tiles
+  #tileList
+
+  // USER LIST
+  //#userList
+  //    table
+  //        thead
+  //            th Time
+  //            th Destination
+  //            th Status
+  //        tbody
+  // /USER LIST

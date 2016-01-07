@@ -1,0 +1,84 @@
+body {
+  font: 14px Helvetica, Arial, sans-serif;
+  background-color: #303030;
+  color: yellow;
+}
+
+#time {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  height: 100px;
+  width: 468px;
+  text-align: center;
+  font-size: 96px;
+}
+
+#tileList {
+  position: absolute;
+  top: 120px;
+  left: 12px;
+  width: 468px;
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+#tileList span {
+  float: left;
+  width: 108px;
+  margin: 4px;
+}
+#tileList span .info-message {
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 1.4;
+}
+
+#tileList div .info {
+  background-color: #F09030;
+  color: #000000;
+}
+
+#userList {
+  position: absolute;
+/*  top: 100px; */
+  top: 400px;
+  left: 10px;
+  width: 468px;
+  text-align: center;
+}
+#userList table {
+  border-collapse:separate;
+  border-spacing:1px;
+  width: 468px;
+}
+#userList table th {
+  font-weight:600;
+  padding:10px 20px;
+  text-align:center;
+}
+#userList table tbody {
+  padding:0; margin:0;
+  border-collapse:collapse;
+  border-spacing:0px;
+}
+#userList table td {
+  padding:5px 10px;
+  text-align:center;
+}
+
+.info {
+  background-color: #F09030;
+  color: #000000;
+}
+
+.warn {
+  background-color: #B33A3A;
+  color: #000000;
+}
+
+fieldset {
+  border:0;
+  padding:0; margin:0;
+}

@@ -1,0 +1,5 @@
+
+# Crontabs to run departures and disruption populations
+* * * * * root /usr/bin/php /usr/src/app/server_php/redis_departures.php >> /var/log/cron.log 2>&1
+*/3 * * * * root /usr/bin/php /usr/src/app/server_php/redis_disruption.php >> /var/log/cron.log 2>&1
+

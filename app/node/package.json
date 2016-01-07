@@ -1,0 +1,12 @@
+{
+  "name": "trainalertsnodejs",
+  "version": "0.0.2",
+  "private": true,
+  "scripts": {
+    "start": "node ./server.js"
+  },
+  "dependencies": {
+    "express": "^4.13.3",
+    "jade": "^1.11.0"
+  }
+}
